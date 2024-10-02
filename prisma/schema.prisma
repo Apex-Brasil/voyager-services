@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Holders {
+  id              String @id @default(uuid())
+  collection_name String
+  accounts        String
+  updated_at      String
+}
+
+model Explorer {
+  id              String @id @default(uuid())
+  collection_name String
+  name            String
+  img             String
+  sales           String
+  volume          String
+  created_at_time String
+}
+
+model Collections {
+  id              String @id @default(uuid())
+  collection_name String
+}
+
+model User {
+  id               String   @id @default(uuid())
+  google_id        String?  @unique
+  twitter_id       String?  @unique
+  twitter_username String?  @unique
+  username         String
+  email            String   @unique
+  account          String?  @unique
+  permission       String?
+  terms_accepted   Boolean  @default(false)
+  created_at       DateTime @default(now())
+  updated_at       DateTime @default(now())
+}
+
+model Assessments {
+  id                         String   @id @default(uuid())
+  collection_name            String
+  wallet                     String
+  user_experience_score      Int      @default(0)
+  innovation_score           Int      @default(0)
+  community_engagement_score Int      @default(0)
+  support_score              Int      @default(0)
+  art_work_score             Int      @default(0)
+  reliability_score          Int      @default(0)
+  comment                    String?
+  created_at                 DateTime @default(now())
+  updated_at                 DateTime @default(now())
+}
+
+model Scores {
+  id                              String   @id @default(uuid())
+  collection_name                 String   @unique
+  holder_score                    Float    @default(0)
+  volume_score                    Float    @default(0)
+  age_score                       Float    @default(0)
+  community_user_experience_score Float    @default(0)
+  community_innovation_score      Float    @default(0)
+  community_engagement_score      Float    @default(0)
+  community_art_work_score        Float    @default(0)
+  community_support_score         Float    @default(0)
+  community_reliability_score     Float    @default(0)
+  audit_score                     Float    @default(0)
+  created_at                      DateTime @default(now())
+  updated_at                      DateTime @default(now())
+}
+
+model Sales {
+  id             String   @id @default(uuid())
+  sale_id        String   @unique
+  seller         String
+  buyer          String
+  offer_id       String
+  listing_price  String
+  listing_symbol String
+  assets         String[]
+  collection     String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Status {
+  id         String   @id @default(uuid())
+  service    String
+  status     String
+  last_id    String   @default("0")
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Auctions {
+  id             String   @id @default(uuid())
+  auction_id     String   @unique
+  seller         String
+  buyer          String
+  listing_price  String
+  listing_symbol String
+  assets         String[]
+  collection     String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
